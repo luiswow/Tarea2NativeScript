@@ -1,0 +1,35 @@
+<ActionBar>
+    <!--
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!--
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label text="Edición"></Label>
+</ActionBar>
+
+<GridLayout class="page__content" rows="50,30,30,50,1250">
+        <TextField row="0" #texto="ngModel" [(ngModel)]="textFieldValue" hint="Ingresar texto..." required  minlen="4"></TextField>
+        <Label row="1" *ngIf="texto.hasError('required')" text="Este campo es requerido"></Label>
+        <Label row="2" *ngIf="!texto.hasError('required') && texto.hasError('minlen')" text="Debe tener mas de 4 digitos"></Label>
+        <Button row="3" text="Agregar!" (tap)="onButtonTap()" *ngIf="texto.valid"></Button>
+        <ListView class="list-group" row="4"  [items]="mails" backgroundColor="lightgray">
+            <ng-template let-x="item">
+                <FlexboLayout flexDirection="row" class="list-group-item">
+                    <GridLayout columns="auto" rows="50" verticalAlignment="top" backgroundColor="lightgray">
+                        <Label [text]="x" class="list-group-item-heading"  verticalAligment="center" style="width: 80%;"></Label>
+                    </GridLayout>
+                </FlexboLayout>
+            </ng-template>
+        </ListView>
+</GridLayout>
+
+
+
